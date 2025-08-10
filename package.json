@@ -1,0 +1,19 @@
+{
+  "name": "amifamousyet",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/index.js",
+  "scripts": {
+    "gen": "node src/index.js",
+    "sort": "node src/sort.js",
+    "top": "node src/top.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "packageManager": "pnpm@10.14.0",
+  "dependencies": {
+    "@atcute/client": "^4.0.3"
+  },
+  "type": "module"
+}
