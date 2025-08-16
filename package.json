@@ -5,7 +5,6 @@
   "main": "src/index.js",
   "scripts": {
     "gen": "node src/index.js",
-    "sort": "node src/sort.js",
     "top": "node src/top.js"
   },
   "keywords": [],

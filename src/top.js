@@ -1,6 +1,6 @@
 import fs from 'fs';
 
-let md = fs.readFileSync('dist/file.txt', 'utf8');
+let md = fs.readFileSync('dist/accounts.txt', 'utf8');
 let lines = md.trim().split('\n');
 
 let header = lines[0];

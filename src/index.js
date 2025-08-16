@@ -58,27 +58,35 @@ async function main() {
 
   const pdses = [];
   for (const [host, val] of Object.entries(json.pdses)) {
+    // i don't want to count bsky accounts
     if (isBlueskyHost(host)) continue;
-    if (val.errorAt != null) continue;
 
-    // this is massive and full of 0 fillower andies
-    if (host == "https://atproto.brid.gy/") continue;
-    if (hosy == "https://pds.si46.world/") continue;
+    // remove any failing pdses
+    if (val.errorAt) continue;
+
+    // this is massive and full of 0 follower andies
+    if (host === "https://atproto.brid.gy/" || host === "https://pds.si46.world/") continue;
 
     pdses.push(host);
   }
 
   const accountsToWrite = [];
   for (const pds of pdses) {
-    console.log(`Fetching accounts from PDS: ${pds}`);
     let accountsOnPds = await getAccountsOnPds(pds);
-    if (!accountsOnPds) continue;
+    if (!accountsOnPds) {
+      console.log(`Failed to get accounts on PDS: ${pds}`);
+      continue;
+    };
     console.log(`Found ${accountsOnPds.length} accounts on PDS: ${pds}`);
 
     for (const account of accountsOnPds) {
       if (!account) continue;
 
       const profile = await getProfile(account.did);
+
+      // don't deal with the data if it has no followers / data is not available
+      if (!profile.followersCount) continue;
+
       if (profile) {
         accountsToWrite.push({
           did: account.did,
@@ -90,7 +98,8 @@ async function main() {
     }
   }
 
-  accountsToWrite.sort((a, b) => a.followersCount - b.followersCount);
+  // sort the accounts by followers count
+  accountsToWrite.sort((a, b) => b.followersCount - a.followersCount);
 
   fs.writeFileSync('dist/accounts.txt', 'Handle | PDS | Followers Count\n');
   fs.appendFileSync('dist/accounts.txt', '------|-----|------------------------\n');
