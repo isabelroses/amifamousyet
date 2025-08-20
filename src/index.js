@@ -17,33 +17,31 @@ async function getAccountsOnPds(pds, cursor = null, accounts = []) {
     method: 'GET',
     headers: { 'Content-Type': 'application/json' },
   });
-  const data = await response.json();
 
-  if (response.ok) {
-    accounts.push(...data.repos);
-
-    if (data.cursor) {
-      return getAccountsOnPds(pds, data.cursor, accounts);
-    }
-
-    return accounts;
-  } else {
+  if (!response.ok) {
     console.log(`failed to retrieve accounts for ${pds}: ${data.error}: ${data.message}`);
     return [];
+  };
+
+  const data = await response.json();
+
+  accounts.push(...data.repos);
+
+  if (data.cursor) {
+    return await getAccountsOnPds(pds, data.cursor, accounts);
   }
+
+  return accounts;
 }
 
 async function getProfile(actor) {
-  try {
-    const response = await client.get('app.bsky.actor.getProfile', {
-      params: { actor },
-    });
+  const response = await client.get('app.bsky.actor.getProfile', {
+    params: { actor },
+  });
 
-    return response.data;
-  } catch (error) {
-    console.log('Error fetching followers count:', error);
-    return null;
-  }
+  if (!response.ok) return;
+
+  return response.data;
 }
 
 // finally do the thing
@@ -68,30 +66,37 @@ async function main() {
 
   const accountsToWrite = [];
   for (const pds of pdses) {
-    let accountsOnPds = await getAccountsOnPds(pds);
-    if (!accountsOnPds) {
-      console.log(`Failed to get accounts on PDS: ${pds}`);
+    try {
+      let accountsOnPds = await getAccountsOnPds(pds);
+
+      if (!accountsOnPds) {
+        console.log(`Failed to get accounts on PDS: ${pds}`);
+        continue;
+      };
+
+      console.log(`Found ${accountsOnPds.length} accounts on PDS: ${pds}`);
+
+      for (const account of accountsOnPds) {
+        if (!account) continue;
+
+        const profile = await getProfile(account.did);
+
+        // don't deal with the data if it has no followers / data is not available
+        if (!profile?.followersCount) continue;
+
+        if (profile) {
+          accountsToWrite.push({
+            did: account.did,
+            handle: profile.handle,
+            followersCount: profile.followersCount,
+            pds: pds,
+          });
+        }
+      }
+    } catch (e) {
+      console.log(`fetch error ${e}`);
       continue;
     };
-    console.log(`Found ${accountsOnPds.length} accounts on PDS: ${pds}`);
-
-    for (const account of accountsOnPds) {
-      if (!account) continue;
-
-      const profile = await getProfile(account.did);
-
-      // don't deal with the data if it has no followers / data is not available
-      if (!profile.followersCount) continue;
-
-      if (profile) {
-        accountsToWrite.push({
-          did: account.did,
-          handle: profile.handle,
-          followersCount: profile.followersCount,
-          pds: pds,
-        });
-      }
-    }
   }
 
   // sort the accounts by followers count
