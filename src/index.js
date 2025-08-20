@@ -11,19 +11,15 @@ function isBlueskyHost(host) {
 }
 
 async function getAccountsOnPds(pds, cursor = null, accounts = []) {
-  try {
-    const url = `${pds}xrpc/com.atproto.sync.listRepos${cursor ? `?cursor=${cursor}` : ''}`;
+  const url = `${pds}xrpc/com.atproto.sync.listRepos${cursor ? `?cursor=${cursor}` : ''}`;
 
-    const data = await (await fetch(url, {
-      method: 'GET',
-      headers: { 'Content-Type': 'application/json' },
-    })).json() || {};
+  const response = await fetch(url, {
+    method: 'GET',
+    headers: { 'Content-Type': 'application/json' },
+  });
+  const data = await response.json();
 
-    if (data.error != null) {
-      console.log(JSON.stringify(data, null, 2));
-      return [];
-    }
-
+  if (response.ok) {
     accounts.push(...data.repos);
 
     if (data.cursor) {
@@ -31,9 +27,9 @@ async function getAccountsOnPds(pds, cursor = null, accounts = []) {
     }
 
     return accounts;
-  } catch (err) {
-    console.log(`failed to get data for ${pds}`);
-    return null;
+  } else {
+    console.log(`failed to retrieve accounts for ${pds}: ${data.error}: ${data.message}`);
+    return [];
   }
 }
 
@@ -101,11 +97,11 @@ async function main() {
   // sort the accounts by followers count
   accountsToWrite.sort((a, b) => b.followersCount - a.followersCount);
 
-  fs.writeFileSync('dist/accounts.txt', 'Handle | PDS | Followers Count\n');
-  fs.appendFileSync('dist/accounts.txt', '------|-----|------------------------\n');
+  fs.writeFileSync('dist/accounts.md', 'Rank | Handle | PDS | Followers');
+  fs.appendFileSync('dist/accounts.md', '\n----|------|-----|----------');
 
-  for (const account of accountsToWrite) {
-    fs.appendFileSync('dist/accounts.txt', `${account.handle} | ${account.pds} | ${account.followersCount}\n`);
+  for (const [i, account] of accountsToWrite.entries()) {
+    fs.appendFileSync('dist/accounts.md', `\n${i + 1} | ${account.handle} | ${account.pds} | ${account.followersCount}`);
   }
 }
 

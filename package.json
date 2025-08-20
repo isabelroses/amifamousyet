@@ -4,8 +4,7 @@
   "description": "",
   "main": "src/index.js",
   "scripts": {
-    "gen": "node src/index.js",
-    "top": "node src/top.js"
+    "gen": "node src/index.js"
   },
   "keywords": [],
   "author": "",
