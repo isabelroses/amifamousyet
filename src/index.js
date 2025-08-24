@@ -19,9 +19,9 @@ async function getAccountsOnPds(pds, cursor = null, accounts = []) {
   });
 
   if (!response.ok) {
-    console.log(`failed to retrieve accounts for ${pds}: ${data.error}: ${data.message}`);
+    console.log(`failed to retrieve accounts for ${pds}`);
     return [];
-  };
+  }
 
   const data = await response.json();
 
@@ -51,8 +51,28 @@ async function getProfiles(actorsWithPds) {
   }));
 }
 
-// finally do the thing
+async function fetchAllAccounts(pdses, concurrency = 5) {
+  const results = [];
+  const queue = [...pdses];
 
+  const workers = Array.from({ length: concurrency }, async () => {
+    while (queue.length > 0) {
+      const pds = queue.pop();
+      try {
+        const accountsOnPds = await getAccountsOnPds(pds);
+        results.push(...accountsOnPds);
+        console.log(`Found ${accountsOnPds.length} accounts on ${pds}`);
+      } catch (e) {
+        console.log(`fetch error ${e}`);
+      }
+    }
+  });
+
+  await Promise.all(workers);
+  return results;
+}
+
+// finally do the thing
 async function main() {
   const data = fs.readFileSync('data.json', 'utf8');
   const json = JSON.parse(data);
@@ -66,33 +86,17 @@ async function main() {
     if (val.errorAt) continue;
 
     // this is massive and full of 0 follower andies
-    if (host === "https://atproto.brid.gy/" || host === "https://pds.si46.world/") continue;
+    if (host === 'https://atproto.brid.gy/' || host === 'https://pds.si46.world/') continue;
 
     pdses.push(host);
   }
 
-  const accounts = [];
-  for (const pds of pdses) {
-    try {
-      const accountsOnPds = await getAccountsOnPds(pds);
-
-      if (!accountsOnPds) {
-        console.log(`Failed to get accounts on PDS: ${pds}`);
-        continue;
-      };
-
-      console.log(`Found ${accountsOnPds.length} accounts on PDS: ${pds}`);
-      accounts.push(...accountsOnPds);
-    } catch (e) {
-      console.log(`fetch error ${e}`);
-      continue;
-    };
-  }
+  const accounts = await fetchAllAccounts(pdses, 5);
 
   const accountsToWrite = [];
-  for (let i = 0; i <= accounts.length; i = i + 25) {
-    const accountsToFetch = accounts.slice(i, i + 25);
-    const fetchedProfiles = await getProfiles(accountsToFetch);
+  for (let i = 0; i < accounts.length; i += 25) {
+    const batch = accounts.slice(i, i + 25);
+    const fetchedProfiles = await getProfiles(batch);
     accountsToWrite.push(...fetchedProfiles);
   }
 
@@ -102,7 +106,7 @@ async function main() {
   let output = 'Rank | Handle | PDS | Followers\n----|------|-----|----------';
 
   for (const [i, account] of accountsToWrite.entries()) {
-    output += `\n${i + 1} | ${account.handle} | ${account.pds} | ${account.followersCount}`;
+    output += `\n${i + 1} | ${account.handle} | ${account.pds} | ${account.followersCount || 0}`;
   }
 
   fs.writeFileSync('dist/accounts.md', output);
