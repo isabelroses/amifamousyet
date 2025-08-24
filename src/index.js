@@ -25,7 +25,8 @@ async function getAccountsOnPds(pds, cursor = null, accounts = []) {
 
   const data = await response.json();
 
-  accounts.push(...data.repos);
+  // only get at did's from the accounts, and propigate the pds
+  accounts.push(...data.repos.map(acc => ({ did: acc.did, pds })));
 
   if (data.cursor) {
     return await getAccountsOnPds(pds, data.cursor, accounts);
@@ -34,14 +35,20 @@ async function getAccountsOnPds(pds, cursor = null, accounts = []) {
   return accounts;
 }
 
-async function getProfile(actor) {
-  const response = await client.get('app.bsky.actor.getProfile', {
-    params: { actor },
+async function getProfiles(actorsWithPds) {
+  const dids = actorsWithPds.map(acc => acc.did);
+  const didToPds = new Map(actorsWithPds.map(acc => [acc.did, acc.pds]));
+
+  const response = await client.get('app.bsky.actor.getProfiles', {
+    params: { actors: dids },
   });
 
-  if (!response.ok) return;
+  if (!response.ok) return [];
 
-  return response.data;
+  return response.data.profiles.map(profile => ({
+    ...profile,
+    pds: didToPds.get(profile.did),
+  }));
 }
 
 // finally do the thing
@@ -64,10 +71,10 @@ async function main() {
     pdses.push(host);
   }
 
-  const accountsToWrite = [];
+  const accounts = [];
   for (const pds of pdses) {
     try {
-      let accountsOnPds = await getAccountsOnPds(pds);
+      const accountsOnPds = await getAccountsOnPds(pds);
 
       if (!accountsOnPds) {
         console.log(`Failed to get accounts on PDS: ${pds}`);
@@ -75,39 +82,30 @@ async function main() {
       };
 
       console.log(`Found ${accountsOnPds.length} accounts on PDS: ${pds}`);
-
-      for (const account of accountsOnPds) {
-        if (!account) continue;
-
-        const profile = await getProfile(account.did);
-
-        // don't deal with the data if it has no followers / data is not available
-        if (!profile?.followersCount) continue;
-
-        if (profile) {
-          accountsToWrite.push({
-            did: account.did,
-            handle: profile.handle,
-            followersCount: profile.followersCount,
-            pds: pds,
-          });
-        }
-      }
+      accounts.push(...accountsOnPds);
     } catch (e) {
       console.log(`fetch error ${e}`);
       continue;
     };
   }
 
-  // sort the accounts by followers count
-  accountsToWrite.sort((a, b) => b.followersCount - a.followersCount);
+  const accountsToWrite = [];
+  for (let i = 0; i <= accounts.length; i = i + 25) {
+    const accountsToFetch = accounts.slice(i, i + 25);
+    const fetchedProfiles = await getProfiles(accountsToFetch);
+    accountsToWrite.push(...fetchedProfiles);
+  }
 
-  fs.writeFileSync('dist/accounts.md', 'Rank | Handle | PDS | Followers');
-  fs.appendFileSync('dist/accounts.md', '\n----|------|-----|----------');
+  // sort the accounts by followers count
+  accountsToWrite.sort((a, b) => (b.followersCount || 0) - (a.followersCount || 0));
+
+  let output = 'Rank | Handle | PDS | Followers\n----|------|-----|----------';
 
   for (const [i, account] of accountsToWrite.entries()) {
-    fs.appendFileSync('dist/accounts.md', `\n${i + 1} | ${account.handle} | ${account.pds} | ${account.followersCount}`);
+    output += `\n${i + 1} | ${account.handle} | ${account.pds} | ${account.followersCount}`;
   }
+
+  fs.writeFileSync('dist/accounts.md', output);
 }
 
 main()
