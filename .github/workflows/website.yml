@@ -4,6 +4,11 @@ on:
   workflow_dispatch:
   schedule:
     - cron: "0 3 * * *" # run daily at 03:00 UTC
+  push:
+    branches:
+      - main
+    paths:
+      - dist/*
 
 jobs:
   build:
