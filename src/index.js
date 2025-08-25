@@ -28,10 +28,12 @@ async function getAccountsOnPds(pds, cursor = null, accounts = []) {
 
   // only get at did's from the accounts, and propigate the pds
   // and also filter out inactive accounts
-  const accs = data.repos.map(acc => {
-    if (!acc.active) return null;
-    return { did: acc.did, pds };
-  }).filter(x => x);
+  const accs = data.repos
+    .map((acc) => {
+      if (!acc.active) return null;
+      return { did: acc.did, pds };
+    })
+    .filter((x) => x);
 
   accounts.push(...accs);
 
