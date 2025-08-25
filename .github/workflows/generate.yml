@@ -6,7 +6,7 @@ on:
     - cron: "0 2 * * *" # run daily at 02:00 UTC
 
 jobs:
-  update-lockfile:
+  generate:
     runs-on: ubuntu-latest
 
     steps:

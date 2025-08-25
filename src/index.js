@@ -1,21 +1,22 @@
-import { Client, simpleFetchHandler } from '@atcute/client';
-import fs from 'fs';
+import { Client, simpleFetchHandler } from "@atcute/client";
+import fs from "fs";
 
 const client = new Client({
-	handler: simpleFetchHandler({ service: 'https://public.api.bsky.app' }),
+  handler: simpleFetchHandler({ service: "https://public.api.bsky.app" }),
 });
 
-
 function isBlueskyHost(host) {
-    return /^(?:https?:\/\/)?(?:[^\/]+\.)?(?:bsky\.network|bsky\.app|bsky\.dev|bsky\.social)\/?$/.test(host);
+  return /^(?:https?:\/\/)?(?:[^\/]+\.)?(?:bsky\.network|bsky\.app|bsky\.dev|bsky\.social)\/?$/.test(
+    host,
+  );
 }
 
 async function getAccountsOnPds(pds, cursor = null, accounts = []) {
-  const url = `${pds}xrpc/com.atproto.sync.listRepos${cursor ? `?cursor=${cursor}` : ''}`;
+  const url = `${pds}xrpc/com.atproto.sync.listRepos${cursor ? `?cursor=${cursor}` : ""}`;
 
   const response = await fetch(url, {
-    method: 'GET',
-    headers: { 'Content-Type': 'application/json' },
+    method: "GET",
+    headers: { "Content-Type": "application/json" },
   });
 
   if (!response.ok) {
@@ -26,7 +27,7 @@ async function getAccountsOnPds(pds, cursor = null, accounts = []) {
   const data = await response.json();
 
   // only get at did's from the accounts, and propigate the pds
-  accounts.push(...data.repos.map(acc => ({ did: acc.did, pds })));
+  accounts.push(...data.repos.map((acc) => ({ did: acc.did, pds })));
 
   if (data.cursor) {
     return await getAccountsOnPds(pds, data.cursor, accounts);
@@ -36,16 +37,16 @@ async function getAccountsOnPds(pds, cursor = null, accounts = []) {
 }
 
 async function getProfiles(actorsWithPds) {
-  const dids = actorsWithPds.map(acc => acc.did);
-  const didToPds = new Map(actorsWithPds.map(acc => [acc.did, acc.pds]));
+  const dids = actorsWithPds.map((acc) => acc.did);
+  const didToPds = new Map(actorsWithPds.map((acc) => [acc.did, acc.pds]));
 
-  const response = await client.get('app.bsky.actor.getProfiles', {
+  const response = await client.get("app.bsky.actor.getProfiles", {
     params: { actors: dids },
   });
 
   if (!response.ok) return [];
 
-  return response.data.profiles.map(profile => ({
+  return response.data.profiles.map((profile) => ({
     ...profile,
     pds: didToPds.get(profile.did),
   }));
@@ -74,7 +75,7 @@ async function fetchAllAccounts(pdses, concurrency = 5) {
 
 // finally do the thing
 async function main() {
-  const data = fs.readFileSync('data.json', 'utf8');
+  const data = fs.readFileSync("data.json", "utf8");
   const json = JSON.parse(data);
 
   const pdses = [];
@@ -86,7 +87,11 @@ async function main() {
     if (val.errorAt) continue;
 
     // this is massive and full of 0 follower andies
-    if (host === 'https://atproto.brid.gy/' || host === 'https://pds.si46.world/') continue;
+    if (
+      host === "https://atproto.brid.gy/" ||
+      host === "https://pds.si46.world/"
+    )
+      continue;
 
     pdses.push(host);
   }
@@ -101,15 +106,18 @@ async function main() {
   }
 
   // sort the accounts by followers count
-  accountsToWrite.sort((a, b) => (b.followersCount || 0) - (a.followersCount || 0));
+  accountsToWrite.sort(
+    (a, b) => (b.followersCount || 0) - (a.followersCount || 0),
+  );
 
-  let output = 'Rank | Handle | PDS | Followers\n----|------|-----|----------';
+  let output = "Rank | Handle | PDS | Followers\n----|------|-----|----------";
 
   for (const [i, account] of accountsToWrite.entries()) {
     output += `\n${i + 1} | ${account.handle} (${account.did}) | ${account.pds} | ${account.followersCount || 0}`;
   }
 
-  fs.writeFileSync('dist/accounts.md', output);
+  fs.writeFileSync("dist/accounts.md", output);
+  fs.writeFileSync("dist/accounts.json", JSON.stringify(accountsToWrite));
 }
 
-main()
+main();
