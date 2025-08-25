@@ -22,8 +22,11 @@ try {
         }
       });
 
-      // nuke 0 followers accounts, this massively speeds up webload speeds
-      if (filtered.followersCount === 0) return null;
+      // nuke sub 5 followers accounts, this massively speeds up webload speeds
+      // there are over 5000 sub 0 follower accounts. and most accounts there
+      // are 1500 accounts with less than 5 accounts, most of which have 0 or
+      // no posts, or were created but appear to be completely dead
+      if (filtered.followersCount <= 5) return null;
 
       return filtered;
     })
