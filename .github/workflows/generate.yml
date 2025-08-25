@@ -1,0 +1,39 @@
+name: Generate List
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 2 * * *" # run daily at 02:00 UTC
+
+permissions: {}
+
+jobs:
+  update-lockfile:
+    runs-on: ubuntu-latest
+
+    permissions:
+      pull-requests: write
+      contents: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+        with:
+          persist-credentials: false
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          run_install: true
+
+      - name: Update pdses list
+        run: |
+          curl "https://raw.githubusercontent.com/mary-ext/atproto-scraping/refs/heads/trunk/state.json" -o data.json
+
+      - name: Generate list
+        run: pnpm run gen
+
+      - name: Push changes
+        uses: stefanzweifel/git-auto-commit-action@v6
+        with:
+          commit_message: "chore: generate list"
