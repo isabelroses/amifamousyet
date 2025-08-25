@@ -106,7 +106,7 @@ async function main() {
   let output = 'Rank | Handle | PDS | Followers\n----|------|-----|----------';
 
   for (const [i, account] of accountsToWrite.entries()) {
-    output += `\n${i + 1} | ${account.handle} | ${account.pds} | ${account.followersCount || 0}`;
+    output += `\n${i + 1} | ${account.handle} (${account.did}) | ${account.pds} | ${account.followersCount || 0}`;
   }
 
   fs.writeFileSync('dist/accounts.md', output);
