@@ -1,6 +1,6 @@
 import fs from "fs";
 import path from "path";
-import { minify } from 'minify';
+import { minify } from "minify";
 
 const DATA_FILE = "./dist/accounts.json";
 const TEMPLATE_FILE = "./site/template.html";
@@ -14,20 +14,20 @@ try {
   // filter to only include specific keys, saving some speed
   const allowedKeys = ["did", "handle", "pds", "followersCount"];
   const jsonData = rawData
-  .map((item) => {
-    const filtered = {};
-    allowedKeys.forEach((key) => {
-      if (item.hasOwnProperty(key)) {
-        filtered[key] = item[key];
-      }
-    });
+    .map((item) => {
+      const filtered = {};
+      allowedKeys.forEach((key) => {
+        if (item.hasOwnProperty(key)) {
+          filtered[key] = item[key];
+        }
+      });
 
-    // nuke 0 followers accounts, this massively speeds up webload speeds
-    if (filtered.followersCount === 0) return null;
+      // nuke 0 followers accounts, this massively speeds up webload speeds
+      if (filtered.followersCount === 0) return null;
 
-    return filtered;
-  })
-  .filter((item) => item !== null);
+      return filtered;
+    })
+    .filter((item) => item !== null);
 
   console.log(
     `Loaded ${rawData.length} records, filtered to ${allowedKeys.length} keys per record`,
