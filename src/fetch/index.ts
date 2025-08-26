@@ -1,17 +1,38 @@
 import { Client, simpleFetchHandler } from "@atcute/client";
+import { AppBskyActorDefs } from "@atcute/bluesky";
+import type { Did } from "@atcute/lexicons";
 import fs from "fs";
+
+interface didWithPds {
+  did: Did;
+  pds: string;
+}
+
+interface profileWithPds extends AppBskyActorDefs.ProfileViewDetailed {
+  pds: string;
+}
+
+interface Pds {
+  inviteCodeRequired?: boolean;
+	version?: string;
+  errorAt?: string;
+}
 
 const client = new Client({
   handler: simpleFetchHandler({ service: "https://public.api.bsky.app" }),
 });
 
-function isBlueskyHost(host) {
+function isBlueskyHost(host: string): boolean {
   return /^(?:https?:\/\/)?(?:[^\/]+\.)?(?:bsky\.network|bsky\.app|bsky\.dev|bsky\.social)\/?$/.test(
     host,
   );
 }
 
-async function getAccountsOnPds(pds, cursor = null, accounts = []) {
+async function getAccountsOnPds(
+  pds: string,
+  cursor: string | undefined = undefined,
+  accounts: didWithPds[] = [],
+): Promise<didWithPds[]> {
   const url = `${pds}xrpc/com.atproto.sync.listRepos${cursor ? `?cursor=${cursor}` : ""}`;
 
   const response = await fetch(url, {
@@ -26,14 +47,14 @@ async function getAccountsOnPds(pds, cursor = null, accounts = []) {
 
   const data = await response.json();
 
-  // only get at did's from the accounts, and propigate the pds
-  // and also filter out inactive accounts
-  const accs = data.repos
-    .map((acc) => {
+  // only get at did's from the accounts, and propagate the pds and filter out
+  // inactive accounts
+  const accs: didWithPds[] = data.repos
+    .map((acc: { did: string; active: boolean }) => {
       if (!acc.active) return null;
       return { did: acc.did, pds };
     })
-    .filter((x) => x);
+    .filter((x: didWithPds | undefined) => x);
 
   accounts.push(...accs);
 
@@ -44,7 +65,9 @@ async function getAccountsOnPds(pds, cursor = null, accounts = []) {
   return accounts;
 }
 
-async function getProfiles(actorsWithPds) {
+async function getProfiles(
+  actorsWithPds: didWithPds[],
+): Promise<profileWithPds[]> {
   const dids = actorsWithPds.map((acc) => acc.did);
   const didToPds = new Map(actorsWithPds.map((acc) => [acc.did, acc.pds]));
 
@@ -56,17 +79,18 @@ async function getProfiles(actorsWithPds) {
 
   return response.data.profiles.map((profile) => ({
     ...profile,
-    pds: didToPds.get(profile.did),
+    pds: didToPds.get(profile.did) || "",
   }));
 }
 
-async function fetchAllAccounts(pdses, concurrency = 5) {
-  const results = [];
+async function fetchAllAccounts(pdses: string[], concurrency = 5) {
+  const results: didWithPds[] = [];
   const queue = [...pdses];
 
   const workers = Array.from({ length: concurrency }, async () => {
     while (queue.length > 0) {
       const pds = queue.pop();
+      if (!pds) continue;
       try {
         const accountsOnPds = await getAccountsOnPds(pds);
         results.push(...accountsOnPds);
@@ -83,11 +107,11 @@ async function fetchAllAccounts(pdses, concurrency = 5) {
 
 // finally do the thing
 async function main() {
-  const data = fs.readFileSync("data.json", "utf8");
-  const json = JSON.parse(data);
+  const data = fs.readFileSync("data/data.json", "utf8");
+  const pdsMap: Map<string, Pds> = JSON.parse(data).pdses;
 
-  const pdses = [];
-  for (const [host, val] of Object.entries(json.pdses)) {
+  const pdses: string[] = [];
+  for (const [host, val] of Object.entries(pdsMap)) {
     // i don't want to count bsky accounts
     if (isBlueskyHost(host)) continue;
 
@@ -106,7 +130,7 @@ async function main() {
 
   const accounts = await fetchAllAccounts(pdses, 5);
 
-  const accountsToWrite = [];
+  const accountsToWrite: profileWithPds[] = [];
   for (let i = 0; i < accounts.length; i += 25) {
     const batch = accounts.slice(i, i + 25);
     const fetchedProfiles = await getProfiles(batch);
@@ -124,8 +148,8 @@ async function main() {
     output += `\n${i + 1} | ${account.handle} (${account.did}) | ${account.pds} | ${account.followersCount || 0}`;
   }
 
-  fs.writeFileSync("dist/accounts.md", output);
-  fs.writeFileSync("dist/accounts.json", JSON.stringify(accountsToWrite));
+  fs.writeFileSync("data/accounts.md", output);
+  fs.writeFileSync("data/accounts.json", JSON.stringify(accountsToWrite));
 }
 
 main();

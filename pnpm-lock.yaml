@@ -8,27 +8,45 @@ importers:
 
   .:
     dependencies:
+      '@atcute/bluesky':
+        specifier: ^3.2.1
+        version: 3.2.1
       '@atcute/client':
         specifier: ^4.0.3
         version: 4.0.3
+      '@atcute/lexicons':
+        specifier: ^1.1.1
+        version: 1.1.1
       minify:
         specifier: ^14.1.0
         version: 14.1.0
     devDependencies:
+      '@types/minify':
+        specifier: ^9.1.4
+        version: 9.1.4
+      '@types/node':
+        specifier: ^24.3.0
+        version: 24.3.0
       prettier:
         specifier: ^3.6.2
         version: 3.6.2
 
 packages:
 
+  '@atcute/atproto@3.1.2':
+    resolution: {integrity: sha512-m6OWoGTeL8Wlw7cm8Nrf+NU24rlx5A0DzxEQQPPu1wqYNHw6S33nOU90W+U09vVN0aZGZUrLFfWWhAaSWTp1ZQ==}
+
+  '@atcute/bluesky@3.2.1':
+    resolution: {integrity: sha512-WehZuGNEC9NNB2y7Jg/i4ANzbMEQzs2EwrLYKWDuvJT3YnPHEol3vkc4DK47TODs3TiacQJp4MWhsQyfktsZ6g==}
+
   '@atcute/client@4.0.3':
     resolution: {integrity: sha512-RIOZWFVLca/HiPAAUDqQPOdOreCxTbL5cb+WUf5yqQOKIu5yEAP3eksinmlLmgIrlr5qVOE7brazUUzaskFCfw==}
 
-  '@atcute/identity@1.0.3':
-    resolution: {integrity: sha512-mNMxbKHFGys03A8JXKk0KfMBzdd0vrYMzZZWjpw1nYTs0+ea6bo5S1hwqVUZxHdo1gFHSe/t63jxQIF4yL9aKw==}
+  '@atcute/identity@1.1.0':
+    resolution: {integrity: sha512-6vRvRqJatDB+JUQsb+UswYmtBGQnSZcqC3a2y6H5DB/v5KcIh+6nFFtc17G0+3W9rxdk7k9M4KkgkdKf/YDNoQ==}
 
-  '@atcute/lexicons@1.1.0':
-    resolution: {integrity: sha512-LFqwnria78xLYb62Ri/+WwQpUTgZp2DuyolNGIIOV1dpiKhFFFh//nscHMA6IExFLQRqWDs3tTjy7zv0h3sf1Q==}
+  '@atcute/lexicons@1.1.1':
+    resolution: {integrity: sha512-k6qy5p3j9fJJ6ekaMPfEfp3ni4TW/XNuH9ZmsuwC0fi0tOjp+Fa8ZQakHwnqOzFt/cVBfGcmYE/lKNAbeTjgUg==}
 
   '@badrap/valita@0.4.6':
     resolution: {integrity: sha512-4kdqcjyxo/8RQ8ayjms47HCWZIF5981oE5nIenbfThKDxWXtEHKipAOWlflpPJzZx9y/JWYQkp18Awr7VuepFg==}
@@ -206,8 +224,8 @@ packages:
   '@jridgewell/trace-mapping@0.3.30':
     resolution: {integrity: sha512-GQ7Nw5G2lTu/BtHTKfXhKHok2WGetd4XYcVKGx00SjAk8GMwgJM3zr6zORiPGuOE+/vkc90KtTosSSvaCjKb2Q==}
 
-  '@putout/minify@5.1.2':
-    resolution: {integrity: sha512-6BJBt2CzGQ1OUlQ9lBJhHjIWQfeRmtPP4liXadjoPrewM/ZAyOT4ZOxo12NrnbBRR0SJGQWXuVO8Po7UC/r98g==}
+  '@putout/minify@5.2.0':
+    resolution: {integrity: sha512-6gD5JVthPjxdydiMjqwZr0/gDaHB7ryErlg9aGvS1m1azhN8RNBrFGzdw1t8NX6B1ChF4vk5H9hLzcnMV0mpTw==}
     engines: {node: '>=20'}
 
   '@swc/core-darwin-arm64@1.13.5':
@@ -284,6 +302,18 @@ packages:
 
   '@swc/types@0.1.24':
     resolution: {integrity: sha512-tjTMh3V4vAORHtdTprLlfoMptu1WfTZG9Rsca6yOKyNYsRr+MUXutKmliB17orgSZk5DpnDxs8GUdd/qwYxOng==}
+
+  '@types/clean-css@4.2.11':
+    resolution: {integrity: sha512-Y8n81lQVTAfP2TOdtJJEsCoYl1AnOkqDqMvXb9/7pfgZZ7r8YrEyurrAvAoAjHOGXKRybay+5CsExqIH6liccw==}
+
+  '@types/html-minifier-terser@7.0.2':
+    resolution: {integrity: sha512-mm2HqV22l8lFQh4r2oSsOEVea+m0qqxEmwpc9kC1p/XzmjLWrReR9D/GRs8Pex2NX/imyEH9c5IU/7tMBQCHOA==}
+
+  '@types/minify@9.1.4':
+    resolution: {integrity: sha512-zrlLe1E5vKMkWcyaTNpgmuRceT3gyq7arehpUg6CDHmpgO6gT0eb3YHNWgM/kT/bNJcpFh0zV6zgnjY594jFBw==}
+
+  '@types/node@24.3.0':
+    resolution: {integrity: sha512-aPTXCrfwnDLj4VvXrm+UUCQjNEvJgNA8s5F1cvwQU+3KNltTOkBm1j30uNLyqqPNe7gE3KFzImYoZEfLhp4Yow==}
 
   acorn@8.15.0:
     resolution: {integrity: sha512-NZyJarBfL7nWwIq+FDL6Zp/yHEhePMNnnJ0y3qfieCrmNvYct8uvtiV41UvlSe6apAfk0fY1FbWx+NwfmpvtTg==}
@@ -514,6 +544,9 @@ packages:
   tslib@2.8.1:
     resolution: {integrity: sha512-oJFu94HQb+KVduSUQL7wnpmqnfmLsOA/nAh6b6EH0wCEoK0/mPeXU6c3wKDV83MkOuHPRHtSXKKU99IBazS/2w==}
 
+  undici-types@7.10.0:
+    resolution: {integrity: sha512-t5Fy/nfn+14LuOc2KNYg75vZqClpAiqscVvMygNnlsHBFpSXdJaYtXMcdNLpl/Qvc3P2cB3s6lOV51nqsFq4ag==}
+
   unicorn-magic@0.1.0:
     resolution: {integrity: sha512-lRfVq8fE8gz6QMBuDM6a+LO3IAzTi05H6gCVaUpir2E1Rwpo4ZUog45KpNXKC/Mn3Yb9UDuHumeFTo9iV/D9FQ==}
     engines: {node: '>=18'}
@@ -530,17 +563,26 @@ packages:
 
 snapshots:
 
+  '@atcute/atproto@3.1.2':
+    dependencies:
+      '@atcute/lexicons': 1.1.1
+
+  '@atcute/bluesky@3.2.1':
+    dependencies:
+      '@atcute/atproto': 3.1.2
+      '@atcute/lexicons': 1.1.1
+
   '@atcute/client@4.0.3':
     dependencies:
-      '@atcute/identity': 1.0.3
-      '@atcute/lexicons': 1.1.0
+      '@atcute/identity': 1.1.0
+      '@atcute/lexicons': 1.1.1
 
-  '@atcute/identity@1.0.3':
+  '@atcute/identity@1.1.0':
     dependencies:
-      '@atcute/lexicons': 1.1.0
+      '@atcute/lexicons': 1.1.1
       '@badrap/valita': 0.4.6
 
-  '@atcute/lexicons@1.1.0':
+  '@atcute/lexicons@1.1.1':
     dependencies:
       esm-env: 1.2.2
 
@@ -643,7 +685,7 @@ snapshots:
       '@jridgewell/resolve-uri': 3.1.2
       '@jridgewell/sourcemap-codec': 1.5.5
 
-  '@putout/minify@5.1.2': {}
+  '@putout/minify@5.2.0': {}
 
   '@swc/core-darwin-arm64@1.13.5':
     optional: true
@@ -696,6 +738,23 @@ snapshots:
   '@swc/types@0.1.24':
     dependencies:
       '@swc/counter': 0.1.3
+
+  '@types/clean-css@4.2.11':
+    dependencies:
+      '@types/node': 24.3.0
+      source-map: 0.6.1
+
+  '@types/html-minifier-terser@7.0.2': {}
+
+  '@types/minify@9.1.4':
+    dependencies:
+      '@types/clean-css': 4.2.11
+      '@types/html-minifier-terser': 7.0.2
+      terser: 5.43.1
+
+  '@types/node@24.3.0':
+    dependencies:
+      undici-types: 7.10.0
 
   acorn@8.15.0: {}
 
@@ -864,7 +923,7 @@ snapshots:
 
   minify@14.1.0:
     dependencies:
-      '@putout/minify': 5.1.2
+      '@putout/minify': 5.2.0
       '@swc/core': 1.13.5
       clean-css: 5.3.3
       css-b64-images: 0.2.5
@@ -961,6 +1020,8 @@ snapshots:
   try-to-catch@3.0.1: {}
 
   tslib@2.8.1: {}
+
+  undici-types@7.10.0: {}
 
   unicorn-magic@0.1.0: {}
 

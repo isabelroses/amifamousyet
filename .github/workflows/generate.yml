@@ -13,6 +13,11 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v5
 
+      - name: Setup node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+
       - name: Install pnpm
         uses: pnpm/action-setup@v4
         with:
@@ -20,7 +25,7 @@ jobs:
 
       - name: Update pdses list
         run: |
-          curl "https://raw.githubusercontent.com/mary-ext/atproto-scraping/refs/heads/trunk/state.json" -o data.json
+          curl "https://raw.githubusercontent.com/mary-ext/atproto-scraping/refs/heads/trunk/state.json" -o data/data.json
 
       - name: Generate list
         run: pnpm run gen

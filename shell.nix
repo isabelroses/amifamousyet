@@ -4,6 +4,7 @@
 pkgs.mkShell {
   packages = with pkgs; [
     pnpm
-    nodejs-slim
+    nodejs-slim_24
+    typescript-language-server
   ];
 }
