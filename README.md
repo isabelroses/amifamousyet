@@ -12,7 +12,16 @@ The fetcher is the most important part here. It takes about 10 minutes to get
 all the data from the none bsky pdses and then processes it into a 2 massive
 json file.
 
-To run the fetcher, run the following command:
+To run the fetcher, run the following commands:
+
+1. First we need to fetch a new instance of the pdses list. This isn't needed
+   if you already have all the pdses you want to check.
+
+```bash
+curl "https://raw.githubusercontent.com/mary-ext/atproto-scraping/refs/heads/trunk/state.json" -o data/data.json
+```
+
+2. Then we can run the fetcher:
 
 ```bash
 pnpm run gen
