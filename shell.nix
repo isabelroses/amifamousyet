@@ -6,5 +6,6 @@ pkgs.mkShell {
     pnpm
     nodejs-slim_24
     typescript-language-server
+    simple-http-server
   ];
 }

@@ -14,7 +14,7 @@ interface profileWithPds extends AppBskyActorDefs.ProfileViewDetailed {
 
 interface Pds {
   inviteCodeRequired?: boolean;
-	version?: string;
+  version?: string;
   errorAt?: string;
 }
 
@@ -105,6 +105,40 @@ async function fetchAllAccounts(pdses: string[], concurrency = 5) {
   return results;
 }
 
+async function createPdsList(accounts: profileWithPds[]) {
+  const pdses = new Map<string, { followers: number; accounts: number }>();
+  for (const account of accounts) {
+    if (pdses.has(account.pds)) {
+      const data = pdses.get(account.pds);
+      const totalFollows = data.followers + (account.followersCount || 0);
+      const totalAccounts = data.accounts + 1;
+      pdses.set(account.pds, {
+        followers: totalFollows,
+        accounts: totalAccounts,
+      });
+    } else {
+      pdses.set(account.pds, {
+        followers: account.followersCount || 0,
+        accounts: 1,
+      });
+    }
+  }
+
+  // sort pdses by followers count
+  const sortedPdses = new Map(
+    [...pdses.entries()].sort((a, b) => b[1].followers - a[1].followers),
+  );
+
+  // convert map to array of objects
+  const pdsesArray = Array.from(sortedPdses, ([pds, data]) => ({
+    pds: pds.replace("https://", "").replace(/\/$/, ""),
+    ...data,
+    "followers to accounts ratio": Math.round(data.followers / data.accounts),
+  }));
+
+  fs.writeFileSync("data/pdses.json", JSON.stringify(pdsesArray));
+}
+
 // finally do the thing
 async function main() {
   const data = fs.readFileSync("data/data.json", "utf8");
@@ -150,6 +184,8 @@ async function main() {
 
   fs.writeFileSync("data/accounts.md", output);
   fs.writeFileSync("data/accounts.json", JSON.stringify(accountsToWrite));
+
+  createPdsList(accountsToWrite)
 }
 
 main();

@@ -1,0 +1,277 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Am I Famous Yet?</title>
+    <link href="styles.css" rel="stylesheet" />
+  </head>
+  <body>
+    <div class="container">
+      <div class="search-bar">
+        <input
+          type="text"
+          id="searchInput"
+          class="search-input"
+          placeholder="Loading data..."
+          disabled
+        />
+        <div class="stats">
+          Showing <strong id="visibleCount">0</strong> of
+          <strong id="totalCount">0</strong> items
+        </div>
+
+        <div class="pagination-controls">
+          <div class="page-size-selector">
+            <label>Show:</label>
+            <select id="pageSizeSelect">
+              <option value="25">25</option>
+              <option value="50" selected>50</option>
+              <option value="100">100</option>
+              <option value="200">200</option>
+            </select>
+            <label>per page</label>
+          </div>
+
+          <div class="pagination">
+            <button id="firstBtn">&laquo;</button>
+            <button id="prevBtn">&lsaquo;</button>
+            <div class="page-info">
+              Page <span id="currentPageSpan">1</span> of
+              <span id="totalPagesSpan">1</span>
+            </div>
+            <button id="nextBtn">&rsaquo;</button>
+            <button id="lastBtn">&raquo;</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="table-container">
+        <table id="dataTable">
+          <thead id="tableHead"></thead>
+          <tbody id="tableBody"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <script>
+      let DATA = [];
+      let filteredData = [];
+      let columns = [];
+      let currentPage = 1;
+      let pageSize = 50;
+
+      const searchInput = document.getElementById("searchInput");
+      const tableHead = document.getElementById("tableHead");
+      const tableBody = document.getElementById("tableBody");
+      const totalCount = document.getElementById("totalCount");
+      const visibleCount = document.getElementById("visibleCount");
+      const pageSizeSelect = document.getElementById("pageSizeSelect");
+      const currentPageSpan = document.getElementById("currentPageSpan");
+      const totalPagesSpan = document.getElementById("totalPagesSpan");
+      const firstBtn = document.getElementById("firstBtn");
+      const prevBtn = document.getElementById("prevBtn");
+      const nextBtn = document.getElementById("nextBtn");
+      const lastBtn = document.getElementById("lastBtn");
+
+      // Load data from external file
+      async function loadData() {
+        try {
+          const response = await fetch("__DATA_FILENAME__");
+          if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+          }
+          DATA = await response.json();
+          filteredData = [...DATA];
+
+          initializeColumns();
+          createTableHeader();
+          displayData();
+
+          // Enable controls after data is loaded
+          searchInput.disabled = false;
+          searchInput.placeholder = "Search by handle or did...";
+          pageSizeSelect.disabled = false;
+
+          // Setup event listeners
+          setupEventListeners();
+        } catch (error) {
+          console.error("Error loading data:", error);
+          tableBody.innerHTML = `
+                    <tr>
+                        <td colspan="4" class="no-results">
+                            Error loading data: ${error.message}
+                        </td>
+                    </tr>
+                `;
+        }
+      }
+
+      function initializeColumns() {
+        if (DATA.length === 0) return;
+
+        const allKeys = new Set();
+        DATA.forEach((item) => {
+          Object.keys(item).forEach((key) => allKeys.add(key));
+        });
+
+        columns = ["#", ...Array.from(allKeys)];
+      }
+
+      function createTableHeader() {
+        const headerRow = document.createElement("tr");
+
+        columns.forEach((col) => {
+          const th = document.createElement("th");
+          if (col === "#") {
+            th.textContent = "Rank";
+            th.className = "rank-cell";
+          } else {
+            th.textContent = col;
+          }
+          headerRow.appendChild(th);
+        });
+
+        tableHead.appendChild(headerRow);
+      }
+
+      function setupEventListeners() {
+        searchInput.addEventListener("input", (e) => {
+          const searchTerm = e.target.value.trim();
+          currentPage = 1; // Reset to first page on search
+          filterData(searchTerm);
+        });
+
+        pageSizeSelect.addEventListener("change", (e) => {
+          pageSize = parseInt(e.target.value);
+          currentPage = 1; // Reset to first page
+          displayData();
+        });
+
+        firstBtn.addEventListener("click", () => {
+          currentPage = 1;
+          displayData();
+        });
+
+        prevBtn.addEventListener("click", () => {
+          if (currentPage > 1) {
+            currentPage--;
+            displayData();
+          }
+        });
+
+        nextBtn.addEventListener("click", () => {
+          const totalPages = Math.ceil(filteredData.length / pageSize);
+          if (currentPage < totalPages) {
+            currentPage++;
+            displayData();
+          }
+        });
+
+        lastBtn.addEventListener("click", () => {
+          const totalPages = Math.ceil(filteredData.length / pageSize);
+          currentPage = totalPages;
+          displayData();
+        });
+      }
+
+      function filterData(searchTerm) {
+        if (!searchTerm) {
+          filteredData = [...DATA];
+        } else {
+          filteredData = DATA.filter((item) => {
+            const handle = item.handle || "";
+            const did = item.did;
+            return handle.includes(searchTerm) || did.includes(searchTerm);
+          });
+        }
+        currentPage = 1;
+        displayData();
+      }
+
+      function displayData() {
+        tableBody.innerHTML = "";
+
+        const totalPages = Math.ceil(filteredData.length / pageSize);
+        const startIndex = (currentPage - 1) * pageSize;
+        const endIndex = Math.min(startIndex + pageSize, filteredData.length);
+        const pageData = filteredData.slice(startIndex, endIndex);
+
+        if (pageData.length === 0) {
+          const row = document.createElement("tr");
+          const cell = document.createElement("td");
+          cell.colSpan = columns.length;
+          cell.className = "no-results";
+          cell.textContent =
+            filteredData.length === 0
+              ? "No items match your search."
+              : "No data on this page.";
+          row.appendChild(cell);
+          tableBody.appendChild(row);
+        } else {
+          pageData.forEach((item) => {
+            const originalIndex = DATA.indexOf(item);
+            const rank = originalIndex + 1;
+
+            const row = document.createElement("tr");
+
+            columns.forEach((col) => {
+              const cell = document.createElement("td");
+
+              if (col === "#") {
+                cell.textContent = rank;
+                cell.className = "rank-cell";
+              } else {
+                const value = item[col];
+                if (col.toLowerCase() === "handle")
+                  cell.className = "handle-cell";
+                cell.textContent = value;
+              }
+
+              row.appendChild(cell);
+            });
+
+            tableBody.appendChild(row);
+          });
+        }
+
+        updateStats();
+        updatePaginationControls();
+      }
+
+      function updatePaginationControls() {
+        const totalPages = Math.ceil(filteredData.length / pageSize);
+
+        currentPageSpan.textContent = currentPage;
+        totalPagesSpan.textContent = totalPages;
+
+        firstBtn.disabled = currentPage === 1;
+        prevBtn.disabled = currentPage === 1;
+        nextBtn.disabled = currentPage === totalPages || totalPages === 0;
+        lastBtn.disabled = currentPage === totalPages || totalPages === 0;
+      }
+
+      function updateStats() {
+        totalCount.textContent = DATA.length;
+
+        const totalPages = Math.ceil(filteredData.length / pageSize);
+        const startIndex = (currentPage - 1) * pageSize + 1;
+        const endIndex = Math.min(currentPage * pageSize, filteredData.length);
+
+        if (filteredData.length === 0) {
+          visibleCount.textContent = "0";
+        } else {
+          visibleCount.textContent = `${startIndex}-${endIndex}`;
+        }
+      }
+
+      document.addEventListener("DOMContentLoaded", () => {
+        searchInput.disabled = true;
+        searchInput.placeholder = "Loading data...";
+        pageSizeSelect.disabled = true;
+
+        loadData();
+      });
+    </script>
+  </body>
+</html>

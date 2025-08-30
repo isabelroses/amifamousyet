@@ -4,205 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Am I Famous Yet?</title>
-    <style>
-      :root {
-        color-scheme: light dark;
-      }
-
-      * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-      }
-
-      body {
-        font-family:
-          -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-        background: light-dark(#f5f5f5, #000);
-        padding: 20px;
-      }
-
-      .container {
-        max-width: 1400px;
-        margin: 0 auto;
-        background: light-dark(#fff, #050505);
-        border-radius: 8px;
-        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-        overflow: hidden;
-      }
-
-      .search-bar {
-        padding: 20px;
-        background: light-dark(#eee, #1f1f1f);
-        display: flex;
-        align-items: center;
-        gap: 20px;
-        flex-wrap: wrap;
-      }
-
-      .search-input {
-        width: 300px;
-        padding: 10px 15px;
-        border: unset;
-        border-radius: 6px;
-        font-size: 14px;
-        outline: none;
-      }
-
-      .search-input:focus {
-        border-color: light-dark(#007bff, #74c7ec);
-      }
-
-      .stats {
-        color: light-dark(#666, ##9ca3af);
-        font-size: 14px;
-      }
-
-      .pagination-controls {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        margin-left: auto;
-      }
-
-      .page-size-selector {
-        display: flex;
-        align-items: center;
-        gap: 5px;
-      }
-
-      .page-size-selector select {
-        padding: 5px 8px;
-        border: none;
-        border-radius: 4px;
-        font-size: 14px;
-      }
-
-      .pagination {
-        display: flex;
-        align-items: center;
-        gap: 5px;
-      }
-
-      .pagination button {
-        padding: 6px 12px;
-        background: light-dark(#fff, #050505);
-        border-radius: 4px;
-        cursor: pointer;
-        font-size: 14px;
-        border: unset;
-      }
-
-      .pagination button:hover:not(:disabled) {
-        background: light-dark(#f5f5f5, #000);
-      }
-
-      .pagination button:disabled {
-        opacity: 0.5;
-        cursor: not-allowed;
-      }
-
-      .pagination .current-page {
-        background: light-dark(#007bff, #74c7ec);
-        color: #000;
-        border-color: light-dark(#007bff, #74c7ec);
-      }
-
-      .page-info {
-        font-size: 14px;
-        color: ligh-dark(#000, #fff);
-        white-space: nowrap;
-      }
-
-      .table-container {
-        overflow: auto;
-        max-height: calc(100vh - 140px);
-      }
-
-      table {
-        width: 100%;
-        border-collapse: collapse;
-        font-size: 14px;
-      }
-
-      thead th {
-        background: light-dark(#f8f9fa, #1f1f1f);
-        padding: 12px 15px;
-        text-align: left;
-        font-weight: 600;
-        border-bottom: 2px solid light-dark(#dee2e6, #1f1f1f);
-        position: sticky;
-        top: 0;
-        z-index: 10;
-      }
-
-      tbody tr {
-        border-bottom: 1px solid light-dark(#eee, #1f1f1f);
-      }
-
-      tbody tr:hover:not(.no-results) {
-        color: #000;
-        background: light-dark(#007bff, #74c7ec);
-      }
-
-      td {
-        padding: 12px 15px;
-        vertical-align: top;
-      }
-
-      .rank-cell {
-        font-weight: 600;
-        color: light-dark(#666, ##9ca3af);
-        width: 60px;
-      }
-
-      .handle-cell {
-        font-weight: 500;
-        min-width: 150px;
-      }
-
-      .no-results {
-        text-align: center;
-        padding: 40px;
-        color: light-dark(#666, ##9ca3af);
-      }
-
-      @media (max-width: 768px) {
-        .search-bar {
-          flex-direction: column;
-          align-items: stretch;
-          gap: 15px;
-        }
-
-        .search-input {
-          width: 100%;
-          margin-bottom: 10px;
-        }
-
-        .stats {
-          order: 1;
-        }
-
-        .pagination-controls {
-          margin-left: 0;
-          flex-direction: column;
-          gap: 15px;
-        }
-
-        .pagination {
-          justify-content: center;
-        }
-
-        table {
-          font-size: 12px;
-        }
-
-        td,
-        th {
-          padding: 8px 10px;
-        }
-      }
-    </style>
+    <link href="styles.css" rel="stylesheet" />
   </head>
   <body>
     <div class="container">
@@ -288,7 +90,7 @@
 
           // Enable controls after data is loaded
           searchInput.disabled = false;
-          searchInput.placeholder = "Search by did...";
+          searchInput.placeholder = "Search by pds url...";
           pageSizeSelect.disabled = false;
 
           // Setup event listeners
@@ -378,9 +180,8 @@
           filteredData = [...DATA];
         } else {
           filteredData = DATA.filter((item) => {
-            const handle = item.handle || "";
-            const did = item.did;
-            return handle.includes(searchTerm) || did.includes(searchTerm);
+            const pds = item.pds;
+            return pds.includes(searchTerm);
           });
         }
         currentPage = 1;
@@ -421,8 +222,6 @@
                 cell.className = "rank-cell";
               } else {
                 const value = item[col];
-                if (col.toLowerCase() === "handle")
-                  cell.className = "handle-cell";
                 cell.textContent = value;
               }
 
@@ -459,7 +258,7 @@
         if (filteredData.length === 0) {
           visibleCount.textContent = "0";
         } else {
-          visibleCount.textContent = `${startIndex}-${endIndex} of ${filteredData.length}`;
+          visibleCount.textContent = `${startIndex}-${endIndex}`;
         }
       }
 
