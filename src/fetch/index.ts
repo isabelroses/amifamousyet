@@ -176,13 +176,6 @@ async function main() {
     (a, b) => (b.followersCount || 0) - (a.followersCount || 0),
   );
 
-  let output = "Rank | Handle | PDS | Followers\n----|------|-----|----------";
-
-  for (const [i, account] of accountsToWrite.entries()) {
-    output += `\n${i + 1} | ${account.handle} (${account.did}) | ${account.pds} | ${account.followersCount || 0}`;
-  }
-
-  fs.writeFileSync("data/accounts.md", output);
   fs.writeFileSync("data/accounts.json", JSON.stringify(accountsToWrite));
 
   createPdsList(accountsToWrite)
