@@ -1,10 +1,14 @@
 {
 	"firehose": {
-		"cursor": 1766190547455674,
+		"cursor": 1766277735562500,
 		"didWebs": {
 			"did:web:8vr.cc": {
 				"hash": "NmtmaSzFL4D6B2qWBQLqBbzWX5p8b5N-jcTi-jTkabw",
 				"pds": "https://pds.8vr.cc"
+			},
+			"did:web:a.retarded.cat": {
+				"hash": "S2NCOSldKyae0W8BhLOyZSXZ_740HRcURsSzahzC1Dk",
+				"pds": "https://sharkgirl.pet/"
 			},
 			"did:web:abbie.cc": {
 				"hash": "oG6XkGGErAYQlWmpkkbar0Pp5cOJDSEmrtJhFGTposs",
@@ -182,14 +186,13 @@
 				"hash": "kOHbFF8Fc2AG6SqK0puu4zheitpSdfllVFYizxtIUZc",
 				"pds": "https://zio.blue/"
 			},
+			"did:web:didtest.testpds.wizardry.systems": {
+				"hash": "OSjeZMWbqCQiNDnuDAl0Hc9CgywBfbCY7byfRNVL46s",
+				"pds": "https://testpds.wizardry.systems/"
+			},
 			"did:web:didweb.abbie.cc": {
 				"hash": "-7PvprRslLSyssMzZt-6wvZJo2PGQYyNa-CimmieN88",
 				"pds": "https://pds.abbie.cc/"
-			},
-			"did:web:didweb.mrrp.lol": {
-				"errorAt": 1764980307261,
-				"hash": "k2JKCDk7znFRCyoQcm7HKHwlgpCRE_8t3u-MoE0a9YU",
-				"pds": "https://purr.mrrp.lol/"
 			},
 			"did:web:didweb.scumb.ag": {
 				"hash": "-JlemdrwvCid4ElOXAquH24ZMlJU1CMx4hJENDkIn6U",
@@ -200,8 +203,7 @@
 				"pds": "https://pds.vriska.dev/"
 			},
 			"did:web:dongs.zip": {
-				"hash": "BnVUwlcFkTeuQgDn-aPLXHoondeGbddBsSlrtN6F8X0",
-				"pds": "https://pds.vielle.dev/"
+				"hash": "_xxU8T6VCZ0h6pACBDEpiY4JoNi00knvfJk1uFmhl8M"
 			},
 			"did:web:em.vg": {
 				"hash": "WzMDgJqEaTPp__fn6EoLP_AvtYJXPmb0VYhx5xkIsyk",
@@ -374,11 +376,6 @@
 				"hash": "svYuhctjADL8UhXYso257FHEKL0SjfEoKANEHiMHFlA",
 				"pds": "https://pds.dreary.dev/"
 			},
-			"did:web:meowing.zip": {
-				"errorAt": 1764980307261,
-				"hash": "JKskT7Uxm3_EVqxu27TPdAv3-aZe_GsRJQ1nL2slGSs",
-				"pds": "https://at.chaogarden.social/"
-			},
 			"did:web:mice.tel": {
 				"hash": "SrZP1ez9qvLPbNqSdok3Drng2WeS2KEfRO5feahZPzY",
 				"pds": "https://pds.mice.tel/"
@@ -493,6 +490,7 @@
 				"pds": "https://atproto.systems/"
 			},
 			"did:web:retarded.cat": {
+				"errorAt": 1766276506209,
 				"hash": "Fp6mDGs5BP60xpZXlhBdqQ6nIYc5cQ-yhz4EJJG28zw",
 				"pds": "https://pds.nkp.pet/"
 			},
@@ -623,6 +621,10 @@
 				"hash": "m0IIT1LWPoZauCkw7RcEpgpKLQgqNplifhZ3yUHc7W0",
 				"pds": "https://pds01.threddy.social/"
 			},
+			"did:web:tranquiltest.nel.pet": {
+				"hash": "yh803fnjwOikk7JSNlrA1Ux7uLSHJ7PsB_NK0kyTEXM",
+				"pds": "https://testpds.wizardry.systems/"
+			},
 			"did:web:v.flw.si": {
 				"hash": "kMK0KNrbWn_sxZ8-TquaUDBziAPUarNMsjjWuPOt5Yc",
 				"pds": "https://zwsp.xyz/"
@@ -694,11 +696,6 @@
 		}
 	},
 	"labelers": {
-		"https://aimod.social/": {
-			"did": "did:plc:bpkpvmwpd3nr2ry4btt55ack",
-			"errorAt": 1764980921892,
-			"version": "0.1.151"
-		},
 		"https://ao3labeler.fujocoded.com/": {
 			"did": "did:plc:m4z7d2wfa7lovi7toqwpjwr6",
 			"version": null
@@ -788,10 +785,6 @@
 			"did": "did:plc:6zjqkupb4xa3q4nelhc56775",
 			"version": "0.1.128"
 		},
-		"https://eebil.nyxt.dev/": {
-			"did": "did:plc:otwidnhraxujyhy3tzt2prqz",
-			"errorAt": 1764980921892
-		},
 		"https://elitometer-bsky-labeler.nwrasl.easypanel.host/": {
 			"did": "did:plc:5zzaepmo6oq57ifawzth2idz"
 		},
@@ -852,6 +845,7 @@
 		},
 		"https://hailey.ngrok.app/": {
 			"did": "did:plc:4qctc5gtrcmjpoqmyxvdqbdf",
+			"errorAt": 1766277750619,
 			"version": "0.2.0"
 		},
 		"https://howaboutyougeta.life/": {
@@ -1197,6 +1191,7 @@
 		},
 		"https://ozone.meozk.app/": {
 			"did": "did:plc:r5ju6hyf6p7lufdpelj37wnk",
+			"errorAt": 1766277750619,
 			"version": "0.1.159"
 		},
 		"https://ozone.moderation.moe/": {
@@ -1320,8 +1315,7 @@
 			"version": "0.1.159"
 		},
 		"https://ozoniumer.knotbin.net/": {
-			"did": "did:plc:sji53vkqe6ez27tchc6l4gf6",
-			"errorAt": 1766190556885
+			"did": "did:plc:sji53vkqe6ez27tchc6l4gf6"
 		},
 		"https://pds.labeler.tny.im/": {
 			"did": "did:plc:uyauirpjzk6le4ygqzatcwnq",
@@ -1736,6 +1730,7 @@
 			"version": "0.4.193"
 		},
 		"https://aoi.blue/": {
+			"errorAt": 1766277750619,
 			"inviteCodeRequired": true,
 			"version": "0.4.193"
 		},
@@ -1820,7 +1815,6 @@
 			"version": "0.4.193"
 		},
 		"https://at-pds.tekat.my.id/": {
-			"errorAt": 1766017631357,
 			"inviteCodeRequired": true,
 			"version": "0.4.38"
 		},
@@ -2132,6 +2126,7 @@
 			"version": "0.4.193"
 		},
 		"https://at.wafrn.jcm.re/": {
+			"errorAt": 1766277750619,
 			"inviteCodeRequired": true,
 			"version": "0.4.193"
 		},
@@ -2156,11 +2151,6 @@
 			"version": "0.4.193"
 		},
 		"https://at2.jbc.lol/": {
-			"inviteCodeRequired": true,
-			"version": "0.4.193"
-		},
-		"https://atlasscripts.com/": {
-			"errorAt": 1764980921892,
 			"inviteCodeRequired": true,
 			"version": "0.4.193"
 		},
@@ -2220,7 +2210,6 @@
 			"version": "alpha"
 		},
 		"https://atproto.is-rocket.science/": {
-			"errorAt": 1766190556885,
 			"inviteCodeRequired": true,
 			"version": "0.4.182"
 		},
@@ -2311,11 +2300,6 @@
 			"inviteCodeRequired": true,
 			"version": "0.4.193"
 		},
-		"https://ayano-sokobi.publicvm.com/": {
-			"errorAt": 1764980921892,
-			"inviteCodeRequired": true,
-			"version": "0.4.193"
-		},
 		"https://b.ersei.net/": {
 			"inviteCodeRequired": true,
 			"version": "0.4.193"
@@ -2333,7 +2317,6 @@
 			"version": "0.4.188"
 		},
 		"https://b3.hk/": {
-			"errorAt": 1766190556885,
 			"inviteCodeRequired": true,
 			"version": "0.4.193"
 		},
@@ -2440,11 +2423,6 @@
 		"https://birbs.party/": {
 			"inviteCodeRequired": true,
 			"version": "0.4.182"
-		},
-		"https://birdcafe.online/": {
-			"errorAt": 1764894627924,
-			"inviteCodeRequired": true,
-			"version": "0.4.193"
 		},
 		"https://bishop.blue/": {
 			"inviteCodeRequired": true,
@@ -2675,6 +2653,7 @@
 			"version": "0.4.74"
 		},
 		"https://bluesky.broszeit.be/": {
+			"errorAt": 1766277750619,
 			"inviteCodeRequired": true,
 			"version": "0.4.193"
 		},
@@ -3209,6 +3188,7 @@
 			"version": "0.4.107"
 		},
 		"https://bluesky.smoothnet.org/": {
+			"errorAt": 1766277750619,
 			"inviteCodeRequired": true,
 			"version": "0.4.193"
 		},
@@ -3237,6 +3217,7 @@
 			"version": "0.4.193"
 		},
 		"https://bluesky.stronk.rocks/": {
+			"errorAt": 1766277750619,
 			"inviteCodeRequired": true,
 			"version": "0.4.74"
 		},
@@ -3490,6 +3471,7 @@
 			"version": "0.4.193"
 		},
 		"https://brittg.com/": {
+			"errorAt": 1766277750619,
 			"inviteCodeRequired": true,
 			"version": "0.4.193"
 		},
@@ -3623,6 +3605,7 @@
 			"version": "0.4.193"
 		},
 		"https://bs.zrq.io/": {
+			"errorAt": 1766277750619,
 			"inviteCodeRequired": true,
 			"version": "0.4.193"
 		},
@@ -3671,7 +3654,6 @@
 			"version": "0.4.193"
 		},
 		"https://bsky.7cb.de/": {
-			"errorAt": 1766190556885,
 			"inviteCodeRequired": true,
 			"version": "0.4.193"
 		},
@@ -3924,6 +3906,7 @@
 			"version": "0.4.193"
 		},
 		"https://bsky.bulles.social/": {
+			"errorAt": 1766277750619,
 			"inviteCodeRequired": true,
 			"version": "0.4.193"
 		},
@@ -3932,6 +3915,7 @@
 			"version": "0.4.193"
 		},
 		"https://bsky.bytecafe.de/": {
+			"errorAt": 1766277750619,
 			"inviteCodeRequired": true,
 			"version": "0.4.193"
 		},
@@ -4071,6 +4055,10 @@
 		"https://bsky.cwpad.com/": {
 			"inviteCodeRequired": true,
 			"version": "0.4.188"
+		},
+		"https://bsky.cyclonopedia.com/": {
+			"inviteCodeRequired": true,
+			"version": "0.4.193"
 		},
 		"https://bsky.cypherstack.com/": {
 			"inviteCodeRequired": true,
@@ -4217,6 +4205,7 @@
 			"version": "0.4.193"
 		},
 		"https://bsky.filippo.sh/": {
+			"errorAt": 1766277750619,
 			"inviteCodeRequired": true,
 			"version": "0.4.67"
 		},
@@ -4225,6 +4214,7 @@
 			"version": "0.4.193"
 		},
 		"https://bsky.fredkin.com/": {
+			"errorAt": 1766277750619,
 			"inviteCodeRequired": true,
 			"version": "0.4.107"
 		},
@@ -4249,11 +4239,6 @@
 			"version": "0.4.193"
 		},
 		"https://bsky.gearlicious.one/": {
-			"inviteCodeRequired": true,
-			"version": "0.4.193"
-		},
-		"https://bsky.gendalph.net/": {
-			"errorAt": 1764980921892,
 			"inviteCodeRequired": true,
 			"version": "0.4.193"
 		},
@@ -4294,6 +4279,7 @@
 			"version": "0.4.193"
 		},
 		"https://bsky.harpersys.org/": {
+			"errorAt": 1766277750619,
 			"inviteCodeRequired": true,
 			"version": "0.4.188"
 		},
@@ -4407,6 +4393,7 @@
 			"version": "0.4.193"
 		},
 		"https://bsky.jcd.pub/": {
+			"errorAt": 1766277750619,
 			"inviteCodeRequired": true,
 			"version": "0.4.193"
 		},
@@ -4499,7 +4486,6 @@
 			"version": "0.4.107"
 		},
 		"https://bsky.leloubil.net/": {
-			"errorAt": 1766104279481,
 			"inviteCodeRequired": true,
 			"version": "0.4.67"
 		},
@@ -4791,6 +4777,7 @@
 			"version": "0.4.193"
 		},
 		"https://bsky.nordisk.cloud/": {
+			"errorAt": 1766277750619,
 			"inviteCodeRequired": true,
 			"version": "0.4.188"
 		},
@@ -4831,6 +4818,7 @@
 			"version": "0.4.193"
 		},
 		"https://bsky.owlsnest.nl/": {
+			"errorAt": 1766277750619,
 			"inviteCodeRequired": true,
 			"version": "0.4.193"
 		},
@@ -4874,7 +4862,6 @@
 			"version": "0.4.193"
 		},
 		"https://bsky.polosk.uno/": {
-			"errorAt": 1766190556885,
 			"inviteCodeRequired": true,
 			"version": "0.4.74"
 		},
@@ -4983,6 +4970,7 @@
 			"version": "0.4.193"
 		},
 		"https://bsky.rznd.com.br/": {
+			"errorAt": 1766277750619,
 			"inviteCodeRequired": true,
 			"version": "0.4.107"
 		},
@@ -5039,7 +5027,6 @@
 			"version": "0.4.193"
 		},
 		"https://bsky.sissyisabella.com/": {
-			"errorAt": 1766104279481,
 			"inviteCodeRequired": true,
 			"version": "0.4.158"
 		},
@@ -5116,6 +5103,9 @@
 		"https://bsky.taila5061.ts.net/": {
 			"inviteCodeRequired": true,
 			"version": "0.4.193"
+		},
+		"https://bsky.tainton.uk/": {
+			"errorAt": 1766277750619
 		},
 		"https://bsky.talkunafraid.co.uk/": {
 			"inviteCodeRequired": true,
@@ -5214,6 +5204,10 @@
 			"inviteCodeRequired": true,
 			"version": "0.4.193"
 		},
+		"https://bsky.ug-system.jp/": {
+			"inviteCodeRequired": true,
+			"version": "0.4.193"
+		},
 		"https://bsky.unicornyrainbow.org/": {
 			"inviteCodeRequired": true,
 			"version": "0.4.107"
@@ -5244,7 +5238,7 @@
 		},
 		"https://bsky.vylion.com/": {
 			"inviteCodeRequired": true,
-			"version": "0.4.188"
+			"version": "0.4.193"
 		},
 		"https://bsky.wambolt.me/": {
 			"inviteCodeRequired": true,
@@ -5356,6 +5350,7 @@
 			"version": "0.4.193"
 		},
 		"https://buenobunny.digital/": {
+			"errorAt": 1766277750619,
 			"inviteCodeRequired": true,
 			"version": "0.4.193"
 		},
@@ -5457,6 +5452,7 @@
 			"version": "0.4.193"
 		},
 		"https://caramelo.social.br/": {
+			"errorAt": 1766277750619,
 			"inviteCodeRequired": true,
 			"version": "0.4.193"
 		},
@@ -5769,7 +5765,6 @@
 			"version": "0.4.193"
 		},
 		"https://cubes.blue/": {
-			"errorAt": 1766104279481,
 			"inviteCodeRequired": true,
 			"version": "0.4.193"
 		},
@@ -6024,6 +6019,7 @@
 			"version": "0.4.193"
 		},
 		"https://eicar-test-file.zip/": {
+			"errorAt": 1766277750619,
 			"inviteCodeRequired": true,
 			"version": "0.4.182"
 		},
@@ -6305,12 +6301,10 @@
 			"version": "git-fa26552"
 		},
 		"https://fwcr.de/": {
-			"errorAt": 1766190556885,
 			"inviteCodeRequired": true,
 			"version": "0.4.158"
 		},
 		"https://gabriex.xyz/": {
-			"errorAt": 1765758686402,
 			"inviteCodeRequired": true,
 			"version": "0.4.193"
 		},
@@ -6335,11 +6329,6 @@
 			"version": "0.4.193"
 		},
 		"https://gbears.social/": {
-			"inviteCodeRequired": true,
-			"version": "0.4.193"
-		},
-		"https://gdyr.co/": {
-			"errorAt": 1764894627924,
 			"inviteCodeRequired": true,
 			"version": "0.4.193"
 		},
@@ -6412,11 +6401,6 @@
 			"version": "0.4.169"
 		},
 		"https://gmandialectic.dev/": {
-			"inviteCodeRequired": true,
-			"version": "0.4.193"
-		},
-		"https://gmo-test043.net/": {
-			"errorAt": 1764894627924,
 			"inviteCodeRequired": true,
 			"version": "0.4.193"
 		},
@@ -6670,11 +6654,6 @@
 		"https://hitechlowlife.com/": {
 			"inviteCodeRequired": true,
 			"version": "0.4.74"
-		},
-		"https://hivetasks.com/": {
-			"errorAt": 1764894627924,
-			"inviteCodeRequired": true,
-			"version": "0.4.193"
 		},
 		"https://hollowfoot.us-west.host.bsky.network/": {
 			"inviteCodeRequired": true,
@@ -7565,6 +7544,7 @@
 			"version": "0.4.188"
 		},
 		"https://moore.social/": {
+			"errorAt": 1766277750619,
 			"inviteCodeRequired": true,
 			"version": "0.4.193"
 		},
@@ -7857,6 +7837,7 @@
 			"version": "0.4.67"
 		},
 		"https://opensocial.community/": {
+			"errorAt": 1766277750619,
 			"inviteCodeRequired": false,
 			"version": "0.4.193"
 		},
@@ -7886,7 +7867,6 @@
 			"version": "0.4.193"
 		},
 		"https://ourmind.space/": {
-			"errorAt": 1766190556885,
 			"inviteCodeRequired": true,
 			"version": "0.4.188"
 		},
@@ -8045,6 +8025,7 @@
 			"version": "0.4.176"
 		},
 		"https://pds-hoocc44cco0g0c840sw04o84.app.hel.shrug.host/": {
+			"errorAt": 1766277750619,
 			"inviteCodeRequired": true,
 			"version": "0.4.182"
 		},
@@ -8342,6 +8323,7 @@
 			"version": "0.4.193"
 		},
 		"https://pds.baker-smith.au/": {
+			"errorAt": 1766277750619,
 			"inviteCodeRequired": true,
 			"version": "0.4.193"
 		},
@@ -9473,6 +9455,10 @@
 			"inviteCodeRequired": true,
 			"version": "0.4.193"
 		},
+		"https://pds.lioco.re/": {
+			"inviteCodeRequired": true,
+			"version": "0.4.193"
+		},
 		"https://pds.lizthegrey.com/": {
 			"inviteCodeRequired": true,
 			"version": "0.4.193"
@@ -9536,6 +9522,10 @@
 		"https://pds.mahood.dev/": {
 			"inviteCodeRequired": true,
 			"version": "0.4.67"
+		},
+		"https://pds.makeworld.space/": {
+			"inviteCodeRequired": true,
+			"version": "0.4.193"
 		},
 		"https://pds.malauren.be/": {
 			"inviteCodeRequired": true,
@@ -10063,7 +10053,7 @@
 		},
 		"https://pds.regnault.dev/": {
 			"inviteCodeRequired": true,
-			"version": "0.4.169"
+			"version": "0.4.193"
 		},
 		"https://pds.rehborn.dev/": {
 			"inviteCodeRequired": true,
@@ -10092,9 +10082,6 @@
 		"https://pds.richardbanks.dev/": {
 			"inviteCodeRequired": true,
 			"version": "0.4.193"
-		},
-		"https://pds.ridgeway.network/": {
-			"errorAt": 1764980921892
 		},
 		"https://pds.ripperoni.com/": {
 			"inviteCodeRequired": true,
@@ -10172,14 +10159,6 @@
 			"inviteCodeRequired": true,
 			"version": "0.4.193"
 		},
-		"https://pds.scanash.com/": {
-			"errorAt": 1764980921892,
-			"inviteCodeRequired": true,
-			"version": "0.4.182"
-		},
-		"https://pds.scanash.xyz/": {
-			"errorAt": 1764980921892
-		},
 		"https://pds.seansith.com/": {
 			"inviteCodeRequired": true,
 			"version": "0.4.193"
@@ -10194,7 +10173,6 @@
 			"version": "0.4.182"
 		},
 		"https://pds.seigneurao.com/": {
-			"errorAt": 1766104279481,
 			"inviteCodeRequired": true,
 			"version": "0.4.193"
 		},
@@ -10296,6 +10274,7 @@
 			"version": "0.4.193"
 		},
 		"https://pds.snorre.io/": {
+			"errorAt": 1766277750619,
 			"inviteCodeRequired": true,
 			"version": "0.4.193"
 		},
@@ -10467,11 +10446,6 @@
 			"inviteCodeRequired": true,
 			"version": "0.4.138"
 		},
-		"https://pds.terranul.dev/": {
-			"errorAt": 1764894627924,
-			"inviteCodeRequired": true,
-			"version": "0.4.193"
-		},
 		"https://pds.tgirl.cloud/": {
 			"inviteCodeRequired": true,
 			"version": "0.4.193"
@@ -10615,6 +10589,10 @@
 		"https://pds.unravel.fyi/": {
 			"inviteCodeRequired": true,
 			"version": "0.4.199"
+		},
+		"https://pds.unsetsoft.com/": {
+			"inviteCodeRequired": true,
+			"version": "0.4.182"
 		},
 		"https://pds.untone.uk/": {
 			"inviteCodeRequired": true,
@@ -10940,7 +10918,6 @@
 			"version": "0.4.193"
 		},
 		"https://pi.equals.3.141592653589793.ru/": {
-			"errorAt": 1766190556885,
 			"inviteCodeRequired": true,
 			"version": "0.4.193"
 		},
@@ -11047,12 +11024,10 @@
 			"version": "0.4.188"
 		},
 		"https://prevter.me/": {
-			"errorAt": 1766190556885,
 			"inviteCodeRequired": true,
 			"version": "0.4.59"
 		},
 		"https://primula.my.id/": {
-			"errorAt": 1765845032921,
 			"inviteCodeRequired": true,
 			"version": "0.4.193"
 		},
@@ -11226,6 +11201,7 @@
 			"version": "git-fa26552"
 		},
 		"https://reme.social/": {
+			"errorAt": 1766277750619,
 			"inviteCodeRequired": true,
 			"version": "0.4.107"
 		},
@@ -11346,7 +11322,6 @@
 			"version": "0.4.188"
 		},
 		"https://saba.run/": {
-			"errorAt": 1766017631357,
 			"inviteCodeRequired": true,
 			"version": "0.4.193"
 		},
@@ -11634,7 +11609,6 @@
 			"version": "0.4.193"
 		},
 		"https://sky.nevrosvn.com/": {
-			"errorAt": 1766190556885,
 			"inviteCodeRequired": true,
 			"version": "0.4.193"
 		},
@@ -11699,7 +11673,6 @@
 			"version": "0.4.182"
 		},
 		"https://slama.dev/": {
-			"errorAt": 1766190556885,
 			"inviteCodeRequired": true,
 			"version": "0.4.169"
 		},
@@ -12166,6 +12139,7 @@
 			"version": "0.4.193"
 		},
 		"https://the.skoof.ca/": {
+			"errorAt": 1766277750619,
 			"inviteCodeRequired": true,
 			"version": "0.4.193"
 		},
@@ -12174,11 +12148,7 @@
 			"version": "0.4.193"
 		},
 		"https://thebluehydrangea.org/": {
-			"inviteCodeRequired": true,
-			"version": "0.4.193"
-		},
-		"https://thecrists.com/": {
-			"errorAt": 1764894627924,
+			"errorAt": 1766277750619,
 			"inviteCodeRequired": true,
 			"version": "0.4.193"
 		},
@@ -12426,6 +12396,7 @@
 			"version": "git-fa26552"
 		},
 		"https://vengeful.eu/": {
+			"errorAt": 1766277750619,
 			"inviteCodeRequired": true,
 			"version": "0.4.193"
 		},
@@ -12732,6 +12703,6 @@
 		}
 	},
 	"plc": {
-		"cursor": "2025-12-20T00:19:12.340Z"
+		"cursor": "2025-12-21T00:21:54.908Z"
 	}
 }
