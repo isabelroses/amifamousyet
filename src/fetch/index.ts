@@ -150,7 +150,7 @@ async function main() {
     if (isBlueskyHost(host)) continue;
 
     // remove any failing pdses
-    if (val.errorAt) continue;
+    if (val.status != "online") continue;
 
     // this is massive and full of 0 follower andies
     if (
@@ -164,12 +164,26 @@ async function main() {
 
   const accounts = await fetchAllAccounts(pdses, 5);
 
-  const accountsToWrite: profileWithPds[] = [];
+  const batches: didWithPds[][] = [];
   for (let i = 0; i < accounts.length; i += 25) {
-    const batch = accounts.slice(i, i + 25);
-    const fetchedProfiles = await getProfiles(batch);
-    accountsToWrite.push(...fetchedProfiles);
+    batches.push(accounts.slice(i, i + 25));
   }
+
+  const accountsToWrite: profileWithPds[] = [];
+  const batchQueue = [...batches];
+  const profileWorkers = Array.from({ length: 25 }, async () => {
+    while (batchQueue.length > 0) {
+      const batch = batchQueue.pop();
+      if (!batch) continue;
+      try {
+        const fetchedProfiles = await getProfiles(batch);
+        accountsToWrite.push(...fetchedProfiles);
+      } catch (e) {
+        console.log(`profile fetch error ${e}`);
+      }
+    }
+  });
+  await Promise.all(profileWorkers);
 
   // sort the accounts by followers count
   accountsToWrite.sort(

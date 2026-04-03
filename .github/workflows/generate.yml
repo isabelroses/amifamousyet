@@ -25,7 +25,7 @@ jobs:
 
       - name: Update pdses list
         run: |
-          curl "https://raw.githubusercontent.com/mary-ext/atproto-scraping/refs/heads/trunk/state.json" -o data/data.json
+          curl "https://raw.githubusercontent.com/mary-ext/atproto-scraping/refs/heads/trunk/dist/instances.json" -o data/data.json
 
       - name: Generate list
         run: pnpm run gen

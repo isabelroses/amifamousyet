@@ -13,15 +13,15 @@
   "license": "MIT",
   "packageManager": "pnpm@10.14.0",
   "dependencies": {
-    "@atcute/bluesky": "^3.2.1",
-    "@atcute/client": "^4.0.3",
-    "@atcute/lexicons": "^1.1.1",
-    "minify": "^14.1.0"
+    "@atcute/bluesky": "^3.3.0",
+    "@atcute/client": "^4.2.1",
+    "@atcute/lexicons": "^1.2.9",
+    "minify": "^15.2.0"
   },
   "type": "module",
   "devDependencies": {
     "@types/minify": "^9.1.4",
-    "@types/node": "^24.3.0",
-    "prettier": "^3.6.2"
+    "@types/node": "^25.5.2",
+    "prettier": "^3.8.1"
   }
 }
